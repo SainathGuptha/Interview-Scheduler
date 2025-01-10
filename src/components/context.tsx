@@ -4,7 +4,7 @@ import axios from "axios";
 export const DataContext = createContext<any>(null);
 
 
-const url = "http://localhost:3001/schedules";
+const url = "http://localhost:3002/schedules";
 export function ContextProvider({ children }: any) {
 
     interface Data {
@@ -14,8 +14,10 @@ export function ContextProvider({ children }: any) {
         date: string,
         username: string,
         email: string,
+        interviewer: string
     }
     const [events, setEvents] = useState<any>([])
+    const intervierName = ["Interviewer 1", "Interviewer 2"]
     async function addData(data: Data) {
         try {
             const res = await axios.post(url, data)
@@ -44,17 +46,18 @@ export function ContextProvider({ children }: any) {
             alert(err)
         }
     }
+
     async function fetchevent() {
         try {
             const res = await axios.get(url)
             const filteredData = res.data.map((data: Data) => {
                 return ({
-                    title: data.title,
+                    title: data?.interviewer,
                     start: `${data.date}T${data.start}:00`,
                     end: `${data.date}T${data.end}:00`,
                 })
             })
-            console.log(filteredData);
+
 
             setEvents(filteredData)
         }
@@ -62,10 +65,11 @@ export function ContextProvider({ children }: any) {
             alert(err)
         }
     }
+
+   
     async function deleteData(id: number) {
         try {
             const res = await axios.delete(`${url}/${id}`)
-            // alert("Interview Cancelled")
             return res.data
         }
         catch (err) {
@@ -81,9 +85,30 @@ export function ContextProvider({ children }: any) {
             alert(err)
         }
     }
+
+    function getAvailableSlots(data:any, start:any, end:any, date:Date){
+        const formatTime = (time:Date) => time.toTimeString().slice(0, 5);
+        const unselectedSlots = [];
+        const selectedRanges= data.map((interview:any) => [new Date(`${date}T${interview.start}:00`), new Date(`${date}T${interview.end}:00`)])
+        .sort((a:any, b:any) => a[0] - b[0])
+        let currentStart = start;
+        selectedRanges.forEach(([selectedStart, selectedEnd]: [Date, Date]) => {
+            if (selectedStart > currentStart) {
+                unselectedSlots.push(`${formatTime(currentStart)} - ${formatTime(selectedStart)}`);
+            }
+            currentStart = selectedEnd;
+        });
+    
+        if (currentStart < end) {
+            unselectedSlots.push(`${formatTime(currentStart)} - ${formatTime(end)}`);
+        }
+    
+        return unselectedSlots;
+    }
     return (
-        <DataContext.Provider value={{ events, addData, fetchData, deleteData, updateData, fetchevent , fetchDataById}}>
+        <DataContext.Provider value={{ events, addData, fetchData, deleteData, updateData, fetchevent, fetchDataById, intervierName, url, getAvailableSlots }}>
             {children}
         </DataContext.Provider>
     )
 }
+

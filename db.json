@@ -1,31 +1,24 @@
 {
   "schedules": [
     {
-      "id": "1",
-      "username": "Naveen Kumar",
-      "email": "naveen@example.com",
-      "title": "Frontend Developer Interview",
+      "id": "6b2a",
+      "username": "check1",
+      "email": "sainathguptha22@gmail.com",
+      "title": "check1",
       "date": "2025-01-10",
       "start": "11:00",
-      "end": "00:00"
+      "end": "12:00",
+      "interviewer": "Interviewer 1"
     },
     {
-      "id": "2",
-      "username": "Jay",
-      "email": "jay@example.com",
-      "title": "Backend Developer Interview",
-      "date": "2025-01-12",
+      "id": "4de1",
+      "username": "check2",
+      "email": "check2@gmail.com",
+      "title": "check2",
+      "date": "2025-01-10",
       "start": "14:00",
-      "end": "15:00"
-    },
-    {
-      "id": "3",
-      "username": "Sainath",
-      "email": "Sainath@example.com",
-      "title": "Full Stack Developer Interview",
-      "date": "2025-01-15",
-      "start": "09:00",
-      "end": "10:30"
+      "end": "14:33",
+      "interviewer": "Interviewer 1"
     }
   ]
 }

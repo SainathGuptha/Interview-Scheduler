@@ -23,7 +23,7 @@ export default function Dashboard() {
     function toFilter(value:string){
         if(value){
             fetchData().then((data: any) => {
-                const filter=data.filter((data:any)=>data.username.toLowerCase().includes(value.toLowerCase()) || data.date.includes(value))
+                const filter=data.filter((data:any)=>data.username.toLowerCase().includes(value.toLowerCase()) || data.date.includes(value) || data.interviewer.toLowerCase().includes(value.toLowerCase())) 
                 setInterviews(filter)
             });
         }else{
@@ -59,7 +59,7 @@ export default function Dashboard() {
                     <div key={data.id} className='flex flex-col p-4 border rounded-lg shadow-md mb-4'>
                         <h6 className='text-lg font-bold mb-2'>{data?.title}</h6>
                         <p className='text-sm text-gray-600 mb-1'><strong>Name:</strong> {data?.username}</p>
-                        <p className='text-sm text-gray-600 mb-1'><strong>Email:</strong> {data?.email}</p>
+                        <p className='text-sm text-gray-600 mb-1'><strong>Interviewer:</strong> {data?.interviewer}</p>
                         <p className='text-sm text-gray-600'><strong>Date:</strong> {data?.date} <strong> Time:</strong> {data?.start} - {data?.end}</p>
                         <div className='flex space-x-4 mt-4'>
                             <button className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600' onClick={()=>handleDelete(data.id)}>Cancel</button>
