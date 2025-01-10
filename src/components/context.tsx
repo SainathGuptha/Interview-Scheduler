@@ -4,7 +4,7 @@ import axios from "axios";
 export const DataContext = createContext<any>(null);
 
 
-const url = "http://localhost:3002/schedules";
+const url = "http://localhost:3001/schedules";
 export function ContextProvider({ children }: any) {
 
     interface Data {
